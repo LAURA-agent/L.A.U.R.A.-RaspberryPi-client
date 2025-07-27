@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>LAURA Control Center</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+    <script src="https://cdn.socket.io/4.5.4/socket.io.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.5/codemirror.min.js"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.5/codemirror.min.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.5/mode/markdown/markdown.min.js"></script>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>LAURA Control Center</h1>
+        </header>
+        
+        <div class="status-section">
+            <div class="status-info">
+                <div class="status-item">
+                    <span class="label">Status:</span>
+                    <span id="system-status" class="value">Connecting...</span>
+                </div>
+                <div class="status-item">
+                    <span class="label">Model:</span>
+                    <span id="current-model" class="value">Claude 3.5 Sonnet</span>
+                </div>
+                <div class="status-item">
+                    <span class="label">Voice:</span>
+                    <span id="current-voice" class="value">ElevenLabs/Rachel</span>
+                </div>
+                <div class="status-item">
+                    <span class="label">Persona:</span>
+                    <span id="current-persona" class="value">LAURA</span>
+                </div>
+            </div>
+            <div class="laura-image-container">
+                <img id="laura-display" src="/api/current_image" alt="LAURA Display" 
+                     onerror="this.src='data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMjAwIiBoZWlnaHQ9IjIwMCIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj48cmVjdCB3aWR0aD0iMjAwIiBoZWlnaHQ9IjIwMCIgZmlsbD0iIzMzMyIvPjx0ZXh0IHg9IjUwJSIgeT0iNTAlIiB0ZXh0LWFuY2hvcj0ibWlkZGxlIiBmaWxsPSIjNjY2IiBmb250LXNpemU9IjI0Ij5MQVVSQSA8L3RleHQ+PC9zdmc+'">
+            </div>
+        </div>
+
+        <div class="settings-section">
+            <h2>Quick Settings</h2>
+            <div class="settings-grid">
+                <div class="setting-item">
+                    <label for="llm-select">LLM Model:</label>
+                    <select id="llm-select">
+                        <option value="claude-3.5-sonnet">Claude 3.5 Sonnet</option>
+                        <option value="claude-3-opus">Claude 3 Opus</option>
+                        <option value="gpt-4">GPT-4</option>
+                        <option value="custom">Custom Model</option>
+                    </select>
+                </div>
+                <div class="setting-item">
+                    <label for="voice-select">Voice:</label>
+                    <select id="voice-select">
+                        <option value="rachel">Rachel (ElevenLabs)</option>
+                        <option value="sarah">Sarah (ElevenLabs)</option>
+                        <option value="nova">Nova (OpenAI)</option>
+                        <option value="alloy">Alloy (OpenAI)</option>
+                    </select>
+                </div>
+                <div class="setting-item">
+                    <label for="persona-select">Persona:</label>
+                    <select id="persona-select">
+                        <!-- Populated dynamically from API -->
+                    </select>
+                </div>
+                <div class="setting-item">
+                    <label for="claude-code-toggle">Claude Code:</label>
+                    <label class="toggle-switch">
+                        <input type="checkbox" id="claude-code-toggle" checked>
+                        <span class="slider"></span>
+                    </label>
+                </div>
+            </div>
+        </div>
+
+        <div class="persona-section">
+            <h2>Voice Personas</h2>
+            
+            <div class="current-personas">
+                <h3>Current Personas</h3>
+                <div id="personas-list" class="personas-grid">
+                    <!-- Populated dynamically -->
+                </div>
+            </div>
+
+            <div class="add-persona">
+                <h3>Add New Persona</h3>
+                <div class="add-persona-form">
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label for="new-persona-name">Persona Name:</label>
+                            <input type="text" id="new-persona-name" placeholder="e.g., sarah, assistant, etc.">
+                        </div>
+                        <div class="form-group">
+                            <label for="new-voice-id">ElevenLabs Voice ID:</label>
+                            <input type="text" id="new-voice-id" placeholder="e.g., qEwI395unGwWV1dn3Y65">
+                        </div>
+                    </div>
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label for="new-voice-name">Voice Description (optional):</label>
+                            <input type="text" id="new-voice-name" placeholder="e.g., Sarah - Friendly female voice">
+                        </div>
+                        <div class="form-group">
+                            <button id="add-persona-btn" class="btn btn-primary">Add Persona</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="editor-section">
+            <h2>CLAUDE.md Editor</h2>
+            <div class="editor-controls">
+                <button id="save-btn" class="btn btn-primary">Save</button>
+                <button id="reload-btn" class="btn">Reload</button>
+                <button id="preview-btn" class="btn">Preview</button>
+            </div>
+            <textarea id="claude-md-editor"></textarea>
+        </div>
+    </div>
+
+    <script src="{{ url_for('static', filename='js/main.js') }}"></script>
+</body>
+</html>

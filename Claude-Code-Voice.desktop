@@ -1,0 +1,12 @@
+[Desktop Entry]
+Version=1.0
+Type=Application
+Name=Claude Code Voice
+Comment=Launch Claude Code with voice command support
+Icon=/home/user/claude-to-speech/extensions/icons/claude-code-voice-48.png
+Exec=/home/user/RP500-Client/launch_claude_voice_with_icon.sh
+Terminal=false
+Categories=Development;IDE;
+Keywords=claude;code;voice;ai;assistant;
+StartupNotify=true
+StartupWMClass=Claude-Code-Voice

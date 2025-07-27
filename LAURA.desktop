@@ -1,0 +1,8 @@
+[Desktop Entry]
+Type=Application
+Name=Start L.A.U.R.A.
+Comment=Launch LAURA Virtual Assistant
+Exec=lxterminal -t "LAURA" -e /home/user/RP500-Client/LAURA
+Icon=/home/user/RP500-Client/laura_icon.png
+Terminal=false
+Categories=Utility;

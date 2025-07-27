@@ -1,0 +1,9 @@
+[Desktop Entry]
+Version=1.0
+Type=Application
+Name=Claude-to-Speech
+Comment=Claude Text-to-Speech
+Exec=lxterminal -e "bash -c 'cd /home/user/claude-to-speech && source venv/bin/activate && python server/tts_launcher.py; read -p \"Press Enter to close...\"'"
+Icon=/home/user/claude-to-speech/extensions/icons/128x128.png
+Terminal=false
+Categories=Utility;
